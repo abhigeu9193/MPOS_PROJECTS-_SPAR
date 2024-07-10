@@ -1,0 +1,39 @@
+<?xml version="1.0" ?>
+<project name="MPOS" default="war">
+	<property file="./build.properties" />
+	<property name="classes.dir" value="build/classes" />
+	<property name="src.dir" value="src" />
+
+	<path id="compile.classpath">
+		<fileset dir="WebContent/WEB-INF/lib">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<target name="init">
+		<mkdir dir="${classes.dir}" />
+		<mkdir dir="dist" />
+	</target>
+
+
+	<target name="compile" description="Compile (without jar-ing)" depends="init">
+
+		<javac executable="${jdk.1_7}\bin\javac" source="1.6" target="1.6" srcdir="${src.dir}" destdir="${classes.dir}" debug="on" memoryInitialSize="128m" memoryMaximumSize="256m">
+			<classpath refid="compile.classpath" />			
+		</javac>
+	</target>	
+
+	<target name="war" depends="compile">
+		<war destfile="C:\MPOS.war" webxml="WebContent/WEB-INF/web.xml">
+			<fileset dir="WebContent" />
+			<lib dir="WebContent/WEB-INF/lib" />
+			<classes dir="build/classes" />
+		</war>
+	</target>
+
+	<target name="clean">
+		<delete dir="dist" />
+		<delete dir="build" />
+	</target>
+
+</project>
